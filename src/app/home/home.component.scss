@@ -1,0 +1,33 @@
+
+.home-panel {
+  max-width: 500px;
+  margin: 0 auto;
+
+  &__home-card {
+    margin: 20px 10px;
+  }
+
+  &__home-actions {
+    text-align: right;
+    margin-right: 10px;
+  }
+
+  &__no-result {
+    margin: 20px 10px;
+    text-align: center;
+  }
+
+  &__search {
+    text-align: center;
+    max-width: 390px;
+    margin: 0 auto;
+
+    &__input {
+      margin-top: 20px;
+    }
+
+    &__button {
+      margin-left: 10px;
+    }
+  }
+}

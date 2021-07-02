@@ -6,7 +6,6 @@ import {HttpClient} from '@angular/common/http';
 import {Resident} from "../model/resident";
 import { MessagesService } from '../messages/messages.service';
 
-
 @Injectable({
     providedIn: 'root'
   }
@@ -40,9 +39,6 @@ private loadAllResidents() {
     return this.residents$;
   }
 
-
-
-
   searchResidents(residentName: string): Observable<Resident[]> {
     return this.residents$
       .pipe(
@@ -51,20 +47,19 @@ private loadAllResidents() {
   )
   };
 
+  updateResident(residentId: number, changes: Partial<Resident>, residentQuoteAssigned: number): Observable<any> {
 
-  saveResident(residentId: number, changes: Partial<Resident>, residentQuoteAssigned: number): Observable<any> {
-
-    const residents = this.subject.getValue(); // the last resident that was emitted by our subject
+    const residents = this.subject.getValue();
     const indexChangedResident = residents.findIndex(resident => resident.id === residentId);
     const newResident: Resident = {
       ...residents[indexChangedResident],
       ...changes
     };
 
-    const updatedResidents: Resident[] = residents.slice(0); // slice(0) copy a complete copy of resident array
+    const updatedResidents: Resident[] = residents.slice(0);
     updatedResidents[indexChangedResident] = newResident;
 
-    this.subject.next(updatedResidents);  // Now the new update is in the memory(to show) but still needs to be send to server for changes
+    this.subject.next(updatedResidents);
 
     if(residentQuoteAssigned > -1){
       this.assignQuoteResident(residentQuoteAssigned, updatedResidents[indexChangedResident].quote!)
@@ -76,7 +71,6 @@ private loadAllResidents() {
           catchError(
             err => {
               const message = 'Could not update the resident!';
-              console.log(message, err);
               this.message.showErrors(message);
               return throwError(err);
             }
@@ -86,22 +80,17 @@ private loadAllResidents() {
     }
   assignQuoteResident (residentId: number, quote: string): Observable<any>  {
 
-    console.log(quote);
-      const residents = this.subject.getValue(); // the last resident that was emitted by our subject
-      console.log(residentId);
+      const residents = this.subject.getValue();
       const indexQuoteAssignee = residents.findIndex(resident => resident.id === residentId);
-      console.log(indexQuoteAssignee);
-      residents[indexQuoteAssignee].quote = quote;
 
+      residents[indexQuoteAssignee].quote = quote;
       this.subject.next(residents);
 
       return this.http.patch(`${this.residentsUrl}/${residentId}`, {quote: quote})
         .pipe(
-          delay( 2000 ),
           catchError(
             err => {
               const message = "Could not update the resident's quote!";
-              console.log(message, err);
               this.message.showErrors(message);
               return throwError(err);
             }

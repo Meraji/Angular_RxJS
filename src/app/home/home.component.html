@@ -1,0 +1,49 @@
+<div class="home-panel">
+
+  <div class="home-panel__search">
+    <mat-form-field class="home-panel__search__input">
+      <input matInput placeholder="Type your search" #searchInput autocomplete="off">
+    </mat-form-field>
+
+    <button class="home-panel__search__button" mat-raised-button color="primary"
+            (click)="onSearch(searchInput.value)">
+      <mat-icon>search</mat-icon>
+      Search
+    </button>
+  </div>
+  <mat-card *ngFor="let resident of (residents$ | async)" class="home-panel__home-card mat-elevation-z10">
+
+    <mat-card-header>
+
+      <mat-card-title>{{resident.gender | gender}}{{resident.firstname}} {{resident.surname}}</mat-card-title>
+      <mat-card-subtitle>
+        <span>Address: </span>
+        {{resident.address}}
+      </mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content *ngIf="resident.quote; else noQuote">
+      <span>Quote: </span>
+      {{resident.quote}}
+    </mat-card-content>
+
+    <ng-template #noQuote>
+      <mat-card-content>
+        <span>{{resident.gender | gender}} {{resident.surname}} has no quotes! </span>
+      </mat-card-content>
+    </ng-template>
+
+    <mat-card-actions class="home-panel__home-actions">
+
+      <button mat-button class="mat-focus-indicator mat-stroked-button mat-primary"
+              (click)="editResidentDialog(resident)">
+        Edit/ Assign
+      </button>
+
+    </mat-card-actions>
+
+  </mat-card>
+
+  <div class="home-panel__no-result" *ngIf="!(residents$ | async)?.length">No results found!</div>
+
+</div>

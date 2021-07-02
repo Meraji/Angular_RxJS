@@ -1,0 +1,90 @@
+<h2 mat-dialog-title>{{resident.gender | gender}} {{resident.firstname}} {{resident.surname}}</h2>
+
+<mat-dialog-content [formGroup]="formEdit">
+
+  <mat-form-field>
+
+    <input matInput required
+           placeholder="First name"
+           formControlName="firstname">
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput
+           placeholder="Last name"
+           formControlName="surname">
+  </mat-form-field>
+
+  <mat-form-field>
+
+    <mat-select placeholder="Gender"
+                formControlName="gender">
+
+      <mat-option value="">
+        Rather not to say
+      </mat-option>
+      <mat-option value="female">
+        Female
+      </mat-option>
+      <mat-option value="male">
+        Male
+      </mat-option>
+
+    </mat-select>
+
+  </mat-form-field>
+
+
+  <mat-form-field>
+
+    <input matInput
+           placeholder="Username"
+           formControlName="username">
+  </mat-form-field>
+
+  <mat-form-field>
+
+    <input matInput
+           placeholder="Address"
+           formControlName="address">
+  </mat-form-field>
+
+  <mat-form-field>
+
+        <textarea matInput placeholder="Quote"
+                  formControlName="quote">
+        </textarea>
+
+  </mat-form-field>
+
+</mat-dialog-content>
+
+<mat-dialog-content [formGroup]="formQuoteAssignee">
+<mat-form-field>
+  <mat-select placeholder="Quote assignee"
+              formControlName="id">
+
+    <mat-option value="">
+    </mat-option>
+    <mat-option *ngFor="let resident of (residents$ | async)" [value]="resident.id">
+      {{resident.firstname}} {{resident.surname}}
+    </mat-option>
+
+  </mat-select>
+</mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions class="home-dialog-actions">
+
+  <button class="mat-raised-button"
+          (click)="close()">
+    Close
+  </button>
+
+  <button [ngClass]="!formEdit.valid ? 'mat-button-disabled': 'mat-primary'" class="mat-raised-button margin-left"
+          (click)="save()" [disabled]="!formEdit.valid">
+    Save
+  </button>
+
+</mat-dialog-actions>
+
+

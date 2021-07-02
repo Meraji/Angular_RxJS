@@ -18,6 +18,7 @@ import { HomeDialogComponent } from './home-dialog/home-dialog.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MessagesComponent } from './messages/messages.component';
 import { MessagesService } from './messages/messages.service';
+import { LoginComponent } from './login/login.component';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { MessagesService } from './messages/messages.service';
     HomeComponent,
     GenderPipe,
     HomeDialogComponent,
-    MessagesComponent
+    MessagesComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
